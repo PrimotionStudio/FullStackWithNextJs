@@ -3,21 +3,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import toast, { Toaster } from 'react-hot-toast';
 import Link from 'next/link';
 
 
 const LoginPage = () => {
+    const router = useRouter();
     const [user, setUser] = useState({
-        email: "",
         username: "",
         password: ""
     });
 
-    const login = async () => { };
+    const login = async () => {
+        try {
+            const response = await axios.post('/api/users/login', user);
+            toast('Login Successful');
+            router.push('/profile');
+        } catch (error: unknown) {
+            if (error instanceof Error)
+                toast.error(error.message);
+            else
+                toast.error('An unknown error occured');
+        }
+    };
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <h1 className='text-2xl'>Login</h1>
-            <form action="" className='w-1/4'>
+            <form action="" className='w-1/4' onSubmit={(e) => e.preventDefault()}>
                 <div className="my-4 flex outline mx-auto items-center gap-4 rounded-md">
                     <label
                         htmlFor="username"
@@ -57,6 +69,7 @@ const LoginPage = () => {
                     <Link href={"/register"} className='hover:underline'>Register Here</Link>
                 </div>
             </form>
+            <Toaster />
         </div>
     );
 };

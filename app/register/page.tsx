@@ -1,23 +1,43 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const RegisterPage = () => {
+    const router = useRouter();
+    const [isButtonDisabled, setButtonDisabled] = useState(false);
     const [user, setUser] = useState({
         email: "",
         username: "",
         password: ""
     });
-
-    const register = async () => { };
+    useEffect(() => {
+        if (user.email.length > 0 && user.username.length > 0 && user.password.length > 0)
+            setButtonDisabled(false);
+        else
+            setButtonDisabled(true);
+    }, [user]);
+    const register = async () => {
+        try {
+            const response = await axios.post('/api/users/signup', user);
+            // console.log(response.data);
+            toast('Successful Registration');
+            router.push('/login');
+        } catch (error: unknown) {
+            if (error instanceof Error)
+                toast.error(error.message);
+            else
+                toast.error('An unknown error occured');
+        }
+    };
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <h1 className='text-2xl'>Register</h1>
-            <form action="" className='w-1/4'>
+            <form action="" className='w-1/4' onSubmit={(e) => e.preventDefault()}>
                 <div className="my-4 flex outline mx-auto items-center gap-4 rounded-md">
                     <label
                         htmlFor="email"
@@ -65,12 +85,17 @@ const RegisterPage = () => {
                         type="submit"
                         onClick={register}
                         className="bg-white rounded-md py-1 px-4 text-black font-bold mx-auto"
+                    // {isButtonDisabled ? (
+                    //     style = {{cursor: 'not-allowed'}}
+                    // )}
+                    // disabled={isButtonDisabled}
                     >
                         Submit
                     </button>
                     <Link href={"/login"} className='hover:underline'>Login Here</Link>
                 </div>
             </form>
+            <Toaster />
         </div>
     );
 };
