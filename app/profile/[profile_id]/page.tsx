@@ -3,11 +3,14 @@
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useParams } from 'next/navigation';
 import { Toaster } from 'react-hot-toast';
 
 const ProfilePage = () => {
+    const { profile_id } = useParams();
     const router = useRouter();
     return (
+
         <div
             className="flex flex-col items-center justify-center h-screen"
             style={{ backgroundColor: '#F9F9F9' }}
@@ -19,7 +22,7 @@ const ProfilePage = () => {
             <p
                 className="text-xl font-semibold text-gray-900 text-center"
                 style={{ marginTop: '1rem' }}
-            >Welcome to your profile page!</p>
+            >Welcome to: /{profile_id}</p>
             <p
                 className="text-sm text-gray-600 text-center"
                 style={{ marginTop: '1rem' }}

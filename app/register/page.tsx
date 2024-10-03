@@ -23,7 +23,7 @@ const RegisterPage = () => {
     }, [user]);
     const register = async () => {
         try {
-            const response = await axios.post('/api/users/signup', user);
+            await axios.post('/api/users/signup', user);
             // console.log(response.data);
             toast('Successful Registration');
             router.push('/login');
@@ -37,7 +37,10 @@ const RegisterPage = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <h1 className='text-2xl'>Register</h1>
-            <form action="" className='w-1/4' onSubmit={(e) => e.preventDefault()}>
+            <form action="" className='w-1/4' onSubmit={(e) => {
+                e.preventDefault();
+                register();
+            }}>
                 <div className="my-4 flex outline mx-auto items-center gap-4 rounded-md">
                     <label
                         htmlFor="email"

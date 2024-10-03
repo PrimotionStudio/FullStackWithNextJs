@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     const login = async () => {
         try {
-            const response = await axios.post('/api/users/login', user);
+            await axios.post('/api/users/login', user);
             toast('Login Successful');
             router.push('/profile');
         } catch (error: unknown) {
@@ -29,7 +29,10 @@ const LoginPage = () => {
     return (
         <div className="min-h-screen flex flex-col items-center justify-center">
             <h1 className='text-2xl'>Login</h1>
-            <form action="" className='w-1/4' onSubmit={(e) => e.preventDefault()}>
+            <form action="" className='w-1/4' onSubmit={(e) => {
+                e.preventDefault();
+                login();
+            }}>
                 <div className="my-4 flex outline mx-auto items-center gap-4 rounded-md">
                     <label
                         htmlFor="username"
