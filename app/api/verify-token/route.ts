@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
-export const config = {
-    runtime: 'nodejs',
-};
+// export const config = {
+//     runtime: 'nodejs',
+// };
 interface RequestBody {
     token: string;
 }

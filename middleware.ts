@@ -13,7 +13,7 @@ export async function middleware(request: NextRequest) {
         body: JSON.stringify({ token }),
     });
     const { user } = await response.json();
-    sessionStorage.setItem('user', user);
+    // sessionStorage.setItem('user', user);
 
     // if (!user) {
     //         console.log(user);
