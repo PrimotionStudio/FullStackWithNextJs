@@ -17,7 +17,7 @@ const LoginPage = () => {
     const login = async () => {
         try {
             await axios.post('/api/users/login', user);
-            toast('Login Successful');
+            toast.success('Login Successful');
             router.push('/profile');
         } catch (error: unknown) {
             if (error instanceof Error)
@@ -64,7 +64,6 @@ const LoginPage = () => {
                 <div className="flex flex-col">
                     <button
                         type="submit"
-                        onClick={login}
                         className="bg-white rounded-md py-1 px-4 text-black font-bold mx-auto"
                     >
                         Submit
